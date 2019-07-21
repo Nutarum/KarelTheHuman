@@ -84,7 +84,7 @@ class BrowserController:
         i=0
         while(currentX!=targetX or currentY!=targetY):
             i=i+1
-            if(i%20==0):
+            if(i%4==0):
                 time.sleep(0.001)
             if(currentX!=targetX and currentY!=targetY):
                 a = random.randint(0, 100)

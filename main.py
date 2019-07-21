@@ -6,7 +6,7 @@ import time
 import random
 
 from browserController import BrowserController
-from chessControler import ChessControler
+from chessController import ChessController
 from utils import Utils
    
 print("Starting...")
@@ -18,7 +18,7 @@ startTime = time.time() #current time in seconds (miliseconds in the decimal val
 startTime = Utils.mySleep(startTime)
 while(1==1):    
     os.system('cls')  # on windows          
-    moveData = ChessControler.updateBoardState(BrowserController.readState())
-    if(len(moveData)==4):
+    moveData = ChessController.updateBoardState(BrowserController.readState())
+    if(moveData != None and len(moveData)==4):
         BrowserController.movePiece(moveData)
     startTime =  Utils.mySleep(startTime)
