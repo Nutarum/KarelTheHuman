@@ -81,8 +81,11 @@ class BrowserController:
         #mouse.click(Button.left, 1)
         targetX = int(boardStartX + (moveData[2]*squareSize) + (random.randint(0, int(squareSize/4))-squareSize/8))
         targetY = int(boardStartY - (moveData[3]*squareSize) + (random.randint(0, int(squareSize/4))-squareSize/8))
+        i=0
         while(currentX!=targetX or currentY!=targetY):
-            time.sleep(0.0001)
+            i=i+1
+            if(i%20==0):
+                time.sleep(0.001)
             if(currentX!=targetX and currentY!=targetY):
                 a = random.randint(0, 100)
                 if(a<50):
