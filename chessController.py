@@ -83,10 +83,10 @@ class ChessController:
                         minDefensor = dValue    
                 if(minDefensor==99):
                     if(minAtacante<minDefensor): #si una pieza esta atacada pero no defendida
-                        value = value - (pieceValue/2)
+                        value = value - (pieceValue/(2/3))
                 else:             
                     if(minAtacante<pieceValue): #si una pieza esta atacada por una de menor valor que ella
-                        value = value - ((pieceValue-minAtacante)/2)
+                        value = value - ((pieceValue-minAtacante)/(2/3))
 
             else:
                 value = value - pieceValue
@@ -104,10 +104,10 @@ class ChessController:
                         minDefensor = dValue    
                 if(minDefensor==99):
                     if(minAtacante<minDefensor): #si una pieza esta atacada pero no defendida
-                        value = value - (pieceValue/2)
+                        value = value + (pieceValue/3)
                 else:             
                     if(minAtacante<pieceValue): #si una pieza esta atacada por una de menor valor que ella
-                        value = value - ((pieceValue-minAtacante)/2)
+                        value = value + ((pieceValue-minAtacante)/3)
         return value 
 
     def getPieceValue(piece_type):
