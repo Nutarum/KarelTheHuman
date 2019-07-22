@@ -63,7 +63,7 @@ class ChessController:
         pieces = board.piece_map() #diccionario [casilla, pieza]
         for i in range(64):
             if(board.is_attacked_by(orientation,i)):
-                value = value + 0.1
+                value = value + 0.07
         for p in pieces: #en p tenemos la casilla
             piece = pieces[p]
             pieceValue =  ChessController.getPieceValue(piece.piece_type)
@@ -83,12 +83,12 @@ class ChessController:
                         minDefensor = dValue    
                 if(minDefensor==99):
                     if(minAtacante<minDefensor): #si una pieza esta atacada pero no defendida
-                        value = value - (pieceValue/(2/3))
+                        value = value - (pieceValue*0.7)
                 else:             
                     if(minAtacante<pieceValue): #si una pieza esta atacada por una de menor valor que ella
-                        value = value - ((pieceValue-minAtacante)/(2/3))
+                        value = value - ((pieceValue-minAtacante)*0.7)
 
-            else:
+            else: #si la pieza es del rival
                 value = value - pieceValue
                 atacantes = board.attackers(not piece.color, p)
                 minAtacante = 99
@@ -104,10 +104,10 @@ class ChessController:
                         minDefensor = dValue    
                 if(minDefensor==99):
                     if(minAtacante<minDefensor): #si una pieza esta atacada pero no defendida
-                        value = value + (pieceValue/3)
+                        value = value + (pieceValue*0.1)
                 else:             
                     if(minAtacante<pieceValue): #si una pieza esta atacada por una de menor valor que ella
-                        value = value + ((pieceValue-minAtacante)/3)
+                        value = value + ((pieceValue-minAtacante)*0.1)
         return value 
 
     def getPieceValue(piece_type):
@@ -122,7 +122,7 @@ class ChessController:
         elif(piece_type==5):
             return 9   
         elif(piece_type==6):
-            return 10
+            return 2
         
             
         
