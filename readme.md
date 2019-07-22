@@ -25,9 +25,8 @@ y marcar la casilla inferior izq y inferior derecha poniendo el raton encima
 y pulsando una tecla (con el foco en la consola)
 
 ## >>> ToDo <<<
-- hacer que gane a michel (facil)
+- hacer que gane a michael (facil)
 - cuando la pantalla de lichess es muy pequeña peta, hacer que avise sin crashear
-- ¿evitar empates por repeticion si va ganando?
 
 ## >>> BUGS <<<
 - 

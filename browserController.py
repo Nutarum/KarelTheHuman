@@ -69,7 +69,7 @@ class BrowserController:
         data.append(movesArray)
         return data
         
-    def movePiece(moveData):       
+    def movePiece(moveData,dragMouseDelay):       
         global mouse
         global boardStartX
         global boardStartY
@@ -84,7 +84,7 @@ class BrowserController:
         i=0
         while(currentX!=targetX or currentY!=targetY):
             i=i+1
-            if(i%4==0):
+            if(i%dragMouseDelay==0):
                 time.sleep(0.001)
             if(currentX!=targetX and currentY!=targetY):
                 a = random.randint(0, 100)
@@ -112,4 +112,7 @@ class BrowserController:
             mouse.position = (currentX,currentY)
         #mouse.click(Button.left, 1)
         mouse.release(Button.left)
+        if(len(moveData)==5):
+            time.sleep(0.1)
+            mouse.click(Button.left, 1)
         
