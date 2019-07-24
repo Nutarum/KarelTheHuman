@@ -21,8 +21,13 @@ BrowserController.initMouse()
 startTime = time.time() #current time in seconds (miliseconds in the decimal values)
 startTime = Utils.mySleep(startTime)
 while(1==1):    
-    os.system('cls')  # on windows          
+    #os.system('cls')  # on windows          
     moveData = ChessController.updateBoardState(BrowserController.readState())
     if(moveData != None and len(moveData)==4 or len(moveData)==5):
         BrowserController.movePiece(moveData,dragMouseDelay)
+    if(moveData != None and len(moveData)==1):
+        if(moveData[0]==-1):	
+            time.sleep(3)
+            BrowserController.clickRevancha()
+            time.sleep(3)
     startTime =  Utils.mySleep(startTime)

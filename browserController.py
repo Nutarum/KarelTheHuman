@@ -31,6 +31,8 @@ class BrowserController:
         global mouse
         global boardStartX
         global boardStartY
+        global rematchX
+        global rematchY
         global squareSize
         mouse = Controller() 
         input("Move the mouse to the bottom left square and press any key...")
@@ -38,6 +40,10 @@ class BrowserController:
         boardStartY = mouse.position[1]
         input("Move the mouse to the bottom right square and press any key...")
         squareSize = (mouse.position[0]-boardStartX)/7
+		
+        input("Move the mouse to the rematch button and press any key...")
+        rematchX = mouse.position[0]
+        rematchY = mouse.position[1]
         
     def readState():    
         global driver
@@ -115,4 +121,10 @@ class BrowserController:
         if(len(moveData)==5):
             time.sleep(0.1)
             mouse.click(Button.left, 1)
-        
+			
+    def clickRevancha():   
+        global mouse
+        global rematchX
+        global rematchY
+        mouse.position = (rematchX, rematchY)
+        mouse.click(Button.left, 1)

@@ -154,7 +154,7 @@ class ChessController:
                 elif(rank==6):
                     return 1.8
                 elif(rank==7):
-                    return 2.5
+                    return 2.7
             else: #si somos negras                      
                 if(rank==6):
                     return 1.1
@@ -165,7 +165,7 @@ class ChessController:
                 elif(rank==3):
                     return 1.8
                 elif(rank==2):
-                    return 2.5
+                    return 2.7
             return 1
         elif(piece_type==2):
             return 3
