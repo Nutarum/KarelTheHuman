@@ -24,8 +24,10 @@ navegar manualmente en lichess hasta la partida que quieras jugar
 y marcar la casilla inferior izq y inferior derecha poniendo el raton encima
 y pulsando una tecla (con el foco en la consola)
 
+## Trainer
+En la carpeta karelthetrainer tenemos un simulador para hacer duelos y pruebas entre diferentes versiones del bot.
+
 ## >>> ToDo <<<
-- hacer que gane a michael (facil)
 - cuando la pantalla de lichess es muy pequeña peta, hacer que avise sin crashear
 
 ## >>> BUGS <<<
