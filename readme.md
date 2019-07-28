@@ -1,5 +1,5 @@
 # Karel the human
-Chess bot (working on lichess.org) Cant even win stockfish 1 :(
+Chess bot (working on lichess.org)
 
 ## Como ejecutar
 Clone the repository
