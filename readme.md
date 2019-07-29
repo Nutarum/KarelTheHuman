@@ -13,6 +13,7 @@ Añadir dependencias
 pip install python-chess
 pip install pynput
 pip install selenium
+pip install colorama
 (y tal vez tambien pip install beautifulsoup4???)
 
 Tener mozilla firefox instalado

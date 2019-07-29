@@ -19,9 +19,12 @@ class KarelTheHumanV1:
                 bestValue=value
                 bestMove=i            
             board.pop()      
-        print("\nMove: " + str(moveList[bestMove]) + "\n")
-        print("Value: " + str(bestValue)+"\n")
-        return moveList[bestMove]
+            
+        ret = []
+        ret.append(moveList[bestMove])
+        ret.append(bestValue)
+        
+        return ret
         
     def getBoardValue(board):
         #tenemos que poner el turno negado, porque en este punto ya hemos pusheado nuestro movimiento para probarlo

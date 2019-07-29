@@ -5,9 +5,7 @@ import chess.pgn
 import collections
 
 class KarelTheHumanV2:
-    def elegirMovimiento(board):
-        orientation = not board.turn
-        
+    def elegirMovimiento(board):        
         moveList = list(board.legal_moves)     
         
         if(len(moveList)==0):
@@ -21,12 +19,16 @@ class KarelTheHumanV2:
                 bestValue=value
                 bestMove=i            
             board.pop()      
-        print("\nMove: " + str(moveList[bestMove]) + "\n")
-        print("Value: " + str(bestValue)+"\n")
-        return moveList[bestMove]
+            
+        ret = []
+        ret.append(moveList[bestMove])
+        ret.append(bestValue)
+        
+        return ret
         
     def getBoardValue(board):
-        orientation = not board.turn
+        #tenemos que poner el turno negado, porque en este punto ya hemos pusheado nuestro movimiento para probarlo
+        orientation = not board.turn 
     
         movPosiblesRival = list(board.legal_moves)  
         if(board.is_checkmate()):
