@@ -1,6 +1,6 @@
 when dragging the mouse,sleep every X ticks (the lower the faster)
 5
 min Sleep time between moves (miliseconds)
-1000
+600
 max Sleep time between moves (miliseconds)
-2000
+1000

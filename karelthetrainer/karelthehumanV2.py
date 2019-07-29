@@ -107,7 +107,7 @@ class KarelTheHumanV2:
             if(len(movPosiblesRival)<2):
                 value = value +2
         value = value + valueAtaques
-        return value 
+        return value + random.random()*3
         
 
     def getPieceValue(piece,pos):
