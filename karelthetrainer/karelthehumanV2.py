@@ -60,10 +60,10 @@ class KarelTheHumanV2:
                         minDefensor = dValue    
                 if(minDefensor==99):
                     if(minAtacante<minDefensor): #si una pieza esta atacada pero no defendida
-                        value = value - (pieceValue*0.7)
+                        value = value - (pieceValue*0.9)
                 else:             
                     if(minAtacante<pieceValue): #si una pieza esta atacada por una de menor valor que ella
-                        value = value - ((pieceValue-minAtacante)*0.7)
+                        value = value - ((pieceValue-minAtacante)*0.9)
 
             else: #si la pieza es del rival
                 value = value - pieceValue
@@ -107,7 +107,7 @@ class KarelTheHumanV2:
             if(len(movPosiblesRival)<2):
                 value = value +2
         value = value + valueAtaques
-        return value + random.random()*3
+        return value + random.random()
         
 
     def getPieceValue(piece,pos):

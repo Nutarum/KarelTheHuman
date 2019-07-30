@@ -6,6 +6,7 @@ import collections
 from colorama import Fore, Back, Style, init
 init()
 
+from stockfish import Stockfish
 from karelthehumanV1 import KarelTheHumanV1
 from karelthehumanV2 import KarelTheHumanV2
 
@@ -24,8 +25,8 @@ class Train:
         else:
             numPartidas = 1
         
-        bot1 = KarelTheHumanV1
-        bot2 = KarelTheHumanV2
+        bot1 = Stockfish(1) #recibe como parametro el nivel de stockfish (de 1 a 20)
+        bot2 = KarelTheHumanV1
         victoriasBot1 = 0
         victoriasBot2 = 0
         empates = 0
