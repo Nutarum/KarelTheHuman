@@ -17,7 +17,7 @@ import chess
 CELL_CONTROLED_VALUE = 0.07
 UNDEFENDED_VALUE_MULTI = 0.7
 ATTACKED_VALUE_MULTI = 0.1
-RANDOM_RANGE = 1
+RANDOM_RANGE = 0
 
 class KarelTheHumanV1:
     def elegirMovimiento(board):        

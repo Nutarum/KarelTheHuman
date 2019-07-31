@@ -16,7 +16,7 @@ import chess
 CELL_CONTROLED_VALUE = 0.07
 UNDEFENDED_VALUE_MULTI = 0.7
 ATTACKED_VALUE_MULTI = 0.1
-RANDOM_RANGE = 1
+RANDOM_RANGE = 0
 
 class KarelTheHumanV2:
     def elegirMovimiento(board):        
@@ -41,9 +41,8 @@ class KarelTheHumanV2:
             
             bestValue2 = -9999999   
             
-            #si un movimiento es un empate
-            #no lo hara a no ser que ningun 
-            #otro movimiento tenga valoracion positiva
+            #si un movimiento es un empate por ahogado no lo hara
+            #a no ser que ningun otro movimiento tenga valoracion positiva
             if(len(moveList2)==0): 
                 bestValue2 = 0           
                      
@@ -53,6 +52,7 @@ class KarelTheHumanV2:
                 if(value2>bestValue2):
                     bestValue2=value2
                 board.pop()
+            
             if(bestValue2<bestValue):
                 bestValue=bestValue2
                 bestMove=i
@@ -126,16 +126,18 @@ class KarelTheHumanV2:
                         valueAtaques = valueAtaques + pieceValue-minAtacante
                         
         valueAtaques = valueAtaques * ATTACKED_VALUE_MULTI
-        if(value>6): #si vamos ganando por mucho, vamos a ser mas agresivos
-            #valueAtaques = valueAtaques * 1.5
-            if(board.can_claim_threefold_repetition()):
-                return -9999 #no queremos permitir empate por repetición cuando vamos ganando
-            if(len(movPosiblesRival)==0):
-                return -9999 #si hemos ahogado (porque el mate ya habria hecho return
-        if(value>12): #si vamos ganando por mucho, vamos a ser mas agresivos
-            #valueAtaques = valueAtaques * 1.5    
-            #ademas, vamos a intentar hacer que el rival tenga el minimo número de movimientos posibles
-            #lo que deberia hacer mas probable llegar a un mate
+        
+        # si un movimiento del rival nos puede empatar, le damos un valor positivo
+        # para que no nos guste la opción
+        if(board.can_claim_threefold_repetition()):
+            return 10
+        #si este movimiento produce un ahogado
+        if(len(movPosiblesRival)==0):
+            return 10
+            
+        if(value>12): 
+            #ademas, vamos a intentar evitar que el rival haga movimientos
+            #que limiten mucho nuestros movimientos posibles, si el rival va ganando
             if(len(movPosiblesRival)<10):
                 value = value +0.5
             if(len(movPosiblesRival)<5):
