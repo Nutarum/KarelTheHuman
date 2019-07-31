@@ -1,23 +1,62 @@
-import numpy as np
 import random
 import chess
-import chess.pgn
-import collections
+
+# Esta versión del bot se basa en darle un valor a la posción del tablero 
+# tras cada movimiento posibles, y realizar el movimiento con mejor valor
+
+# la evaluación se basa en evaluar todos los movimientos posibles del rival
+# tras cada movimiento propio, y quedarnos con el mejor
+
+# elegiremos el movimiento propio que da como resultado el menor valor
+# es decir, el peor de los mejores movimientos del rival
+
+# * La evaluación del tablero tras los movimientos del rival
+#   es identica a la evaluación del tablero de karelthehumanV1
+
+CELL_CONTROLED_VALUE = 0.07
+UNDEFENDED_VALUE_MULTI = 0.7
+ATTACKED_VALUE_MULTI = 0.1
+RANDOM_RANGE = 0
 
 class KarelTheHuman:
     def elegirMovimiento(board):        
-        moveList = list(board.legal_moves)   
+        moveList = list(board.legal_moves)     
+        
         if(len(moveList)==0):
-            return [-1,-1]
-        bestValue = -99999
+            return -1
+        bestValue = 99999
         bestMove = 0
+                
         for i in range(0,len(moveList)):
-            board.push(moveList[i])            
-            value = KarelTheHuman.getBoardValue(board)
-            if(value>bestValue):
-                bestValue=value
-                bestMove=i            
-            board.pop()      
+            board.push(moveList[i])       
+            if(board.is_checkmate()):
+                bestValue=99999
+                bestMove=i
+                board.pop()
+                break
+                
+            #listValues.append(KarelTheHuman.getBoardValue(board))                        
+            
+            moveList2 = list(board.legal_moves)    
+            
+            bestValue2 = -9999999   
+            
+            #si un movimiento es un empate por ahogado no lo hara
+            #a no ser que ningun otro movimiento tenga valoracion positiva
+            if(len(moveList2)==0): 
+                bestValue2 = 0           
+                     
+            for j in range(0,len(moveList2)):
+                board.push(moveList2[j])   
+                value2 = KarelTheHuman.getBoardValue(board)
+                if(value2>bestValue2):
+                    bestValue2=value2
+                board.pop()
+            
+            if(bestValue2<bestValue):
+                bestValue=bestValue2
+                bestMove=i
+            board.pop()        
             
         ret = []
         ret.append(moveList[bestMove])
@@ -38,7 +77,7 @@ class KarelTheHuman:
         pieces = board.piece_map() #diccionario [casilla, pieza]
         for i in range(64):
             if(board.is_attacked_by(orientation,i)):
-                value = value + 0.07
+                value = value + CELL_CONTROLED_VALUE
         for p in pieces: #en p tenemos la casilla
             piece = pieces[p]
             pieceValue =  KarelTheHuman.getPieceValue(piece,p)
@@ -59,10 +98,10 @@ class KarelTheHuman:
                         minDefensor = dValue    
                 if(minDefensor==99):
                     if(minAtacante<minDefensor): #si una pieza esta atacada pero no defendida
-                        value = value - (pieceValue*0.7)
+                        value = value - (pieceValue*UNDEFENDED_VALUE_MULTI)
                 else:             
                     if(minAtacante<pieceValue): #si una pieza esta atacada por una de menor valor que ella
-                        value = value - ((pieceValue-minAtacante)*0.7)
+                        value = value - ((pieceValue-minAtacante)*UNDEFENDED_VALUE_MULTI)
 
             else: #si la pieza es del rival
                 value = value - pieceValue
@@ -86,17 +125,19 @@ class KarelTheHuman:
                     if(minAtacante<pieceValue): #si una pieza esta atacada por una de menor valor que ella
                         valueAtaques = valueAtaques + pieceValue-minAtacante
                         
-        valueAtaques = valueAtaques * 0.1
-        if(value + (valueAtaques * 0.1)>6): #si vamos ganando por mucho, vamos a ser mas agresivos
-            valueAtaques = valueAtaques * 1.5
-            if(board.can_claim_threefold_repetition()):
-                return -1 #no queremos permitir empate por repetición cuando vamos ganando
-            if(len(movPosiblesRival)==0):
-                return -1 #si hemos ahogado (porque el mate ya habria hecho return
-        if(value + (valueAtaques * 0.1)>12): #si vamos ganando por mucho, vamos a ser mas agresivos
-            valueAtaques = valueAtaques * 1.5    
-            #ademas, vamos a intentar hacer que el rival tenga el minimo número de movimientos posibles
-            #lo que deberia hacer mas probable llegar a un mate
+        valueAtaques = valueAtaques * ATTACKED_VALUE_MULTI
+        
+        # si un movimiento del rival nos puede empatar, le damos un valor positivo
+        # para que no nos guste la opción
+        if(board.can_claim_threefold_repetition()):
+            return 10
+        #si este movimiento produce un ahogado
+        if(len(movPosiblesRival)==0):
+            return 10
+            
+        if(value>12): 
+            #ademas, vamos a intentar evitar que el rival haga movimientos
+            #que limiten mucho nuestros movimientos posibles, si el rival va ganando
             if(len(movPosiblesRival)<10):
                 value = value +0.5
             if(len(movPosiblesRival)<5):
@@ -106,7 +147,7 @@ class KarelTheHuman:
             if(len(movPosiblesRival)<2):
                 value = value +2
         value = value + valueAtaques
-        return value 
+        return value + (random.random()*RANDOM_RANGE)
         
 
     def getPieceValue(piece,pos):

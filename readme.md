@@ -30,6 +30,7 @@ En la carpeta karelthetrainer tenemos un simulador para hacer duelos y pruebas e
 
 ## >>> ToDo <<<
 - cuando la pantalla de lichess es muy pequeña peta, hacer que avise sin crashear
+- en vez de la movida de las revanchas, hacer que acepte retos
 
 ## >>> BUGS <<<
 - 
