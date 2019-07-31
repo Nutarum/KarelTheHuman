@@ -1,6 +1,5 @@
 import chess
 import chess.engine
-import asyncio
 
 class Stockfish: 
     engine = None    
@@ -13,8 +12,14 @@ class Stockfish:
     def elegirMovimiento(self,board):  
         #el depth tampoco es que haga mucho, lo importante es el skill level configurado al inicio de esta clase
         #result = engine.play(board, chess.engine.Limit(time=0.01,depth=1))  
-        result = self.engine.play(board, chess.engine.Limit(time=0.01))             
-        return [result.move,0]
+        
+        #no podemos usar el movimiento que hay en info['pv][0] 
+        #porque aqui stockfish analiza siempre como si tubiese skill level 20
+        #(por lo que el value que vemos será el de stockfish 20)
+        info = self.engine.analyse(board,chess.engine.Limit(time=0.01)) 
+        
+        result = self.engine.play(board,chess.engine.Limit(time=0.01)) 
+        return [result.move,info['score']]
         
         
         
