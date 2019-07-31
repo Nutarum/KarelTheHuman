@@ -25,6 +25,8 @@ navegar manualmente en lichess hasta la partida que quieras jugar
 y marcar la casilla inferior izq y inferior derecha poniendo el raton encima
 y pulsando una tecla (con el foco en la consola)
 
+El bot ademas aceptara cualquier desafio de partida, siempre que no este ya jugando (hay que marcar previamente el lugar de las casillas inferior izq y inferior derecha)
+
 ### PARA QUE EL BOT COMIENZE LOGEADO EN LICHESS
 Mirar instrucciones al inicio de la clase browserController.py
 
@@ -33,7 +35,7 @@ En la carpeta karelthetrainer tenemos un simulador para hacer duelos y pruebas e
 
 ## >>> ToDo <<<
 - cuando la pantalla de lichess es muy pequeña peta, hacer que avise sin crashear
-- en vez de la movida de las revanchas, hacer que acepte retos
+- hacer que detecte automaticamente la posición del tablero
 
 ## >>> BUGS <<<
 - 

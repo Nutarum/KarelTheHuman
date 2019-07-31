@@ -18,7 +18,7 @@ class BrowserController:
         
         #PARA QUE EL BOT COMIENZE LOGEADO EN LICHESS
         # Abrimos el navegador con normalidad, vamos a lichess.org y nos logeamos
-        # Ahora iremos a C:/Users/NutPc/AppData/Roaming/Mozilla/Firefox/Profiles
+        # Ahora iremos a C:/Users/<USUARIO>/AppData/Roaming/Mozilla/Firefox/Profiles
         # Una de las carpetas contendra la informacion de la sesion de firefox (cookies y demas)
         # En la ruta de la linea inferior, ponemos la ruta completa con el nombre de la carpeta
         fp = webdriver.FirefoxProfile('C:/Users/NutPc/AppData/Roaming/Mozilla/Firefox/Profiles/cxs6dg4g.default-release')        
@@ -30,7 +30,7 @@ class BrowserController:
         #driver = webdriver.Firefox(firefox_options=options)
         
         #driver = webdriver.Firefox()
-        urlpage = 'https://lichess.org/tv'
+        urlpage = 'https://lichess.org'
         # get web page
         driver.get(urlpage) 
         
@@ -47,16 +47,22 @@ class BrowserController:
         boardStartY = mouse.position[1]
         input("Move the mouse to the bottom right square and press any key...")
         squareSize = (mouse.position[0]-boardStartX)/7
-		
-        input("Move the mouse to the rematch button and press any key...")
-        rematchX = mouse.position[0]
-        rematchY = mouse.position[1]
-        
+		    
+    def aceptarDesafios():
+        btn = driver.find_elements_by_xpath('/html/body/header/div[2]/div[2]/div/div/div/div[2]/form/button')
+        for b in btn:
+            b.click()
+            
     def readState():    
         global driver
         global cellSize
         # find elements by xpath        
         data = []
+        
+        playing = driver.find_elements_by_xpath('/html/body/div[1]/main/aside/div/section/div[1]/div/div')
+        for p in playing:
+            if(not "Playing" in p.text):
+                return [-1]
         
         orientation = driver.find_elements_by_xpath('/html/body/div[1]/main/div[1]/div[1]/div/cg-helper/cg-container/coords[1]')
         for o in orientation:
@@ -128,10 +134,3 @@ class BrowserController:
         if(len(moveData)==5):
             time.sleep(0.1)
             mouse.click(Button.left, 1)
-			
-    def clickRevancha():   
-        global mouse
-        global rematchX
-        global rematchY
-        mouse.position = (rematchX, rematchY)
-        mouse.click(Button.left, 1)
