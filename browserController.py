@@ -16,13 +16,20 @@ class BrowserController:
         global driver
         global action
         
+        #PARA QUE EL BOT COMIENZE LOGEADO EN LICHESS
+        # Abrimos el navegador con normalidad, vamos a lichess.org y nos logeamos
+        # Ahora iremos a C:/Users/NutPc/AppData/Roaming/Mozilla/Firefox/Profiles
+        # Una de las carpetas contendra la informacion de la sesion de firefox (cookies y demas)
+        # En la ruta de la linea inferior, ponemos la ruta completa con el nombre de la carpeta
+        fp = webdriver.FirefoxProfile('C:/Users/NutPc/AppData/Roaming/Mozilla/Firefox/Profiles/cxs6dg4g.default-release')        
+        driver = webdriver.Firefox(fp)
+        
         #PARA QUE EL NAVEGADOR NO SE MUESTRE
         #options = Options()
         #options.headless = True
         #driver = webdriver.Firefox(firefox_options=options)
         
-        #PARA QUE EL NAVEGADOR SE MUESTRE
-        driver = webdriver.Firefox()
+        #driver = webdriver.Firefox()
         urlpage = 'https://lichess.org/tv'
         # get web page
         driver.get(urlpage) 

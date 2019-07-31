@@ -25,6 +25,9 @@ navegar manualmente en lichess hasta la partida que quieras jugar
 y marcar la casilla inferior izq y inferior derecha poniendo el raton encima
 y pulsando una tecla (con el foco en la consola)
 
+### PARA QUE EL BOT COMIENZE LOGEADO EN LICHESS
+Mirar instrucciones al inicio de la clase browserController.py
+
 ## Trainer
 En la carpeta karelthetrainer tenemos un simulador para hacer duelos y pruebas entre diferentes versiones del bot.
 

@@ -23,7 +23,7 @@ class KarelTheHuman:
         moveList = list(board.legal_moves)     
         
         if(len(moveList)==0):
-            return -1
+            return [-1,-1]
         bestValue = 99999
         bestMove = 0
                 

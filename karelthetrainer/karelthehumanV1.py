@@ -24,7 +24,7 @@ class KarelTheHumanV1:
         moveList = list(board.legal_moves)     
         
         if(len(moveList)==0):
-            return -1
+            return [-1,-1]
         bestValue = -99999
         bestMove = 0
         for i in range(0,len(moveList)):
