@@ -3,7 +3,6 @@ import time
 
 class Utils:
 
-    dragMouseDelay = 1
     minSleep = 3000
     maxSleep = 6000
     
@@ -17,7 +16,9 @@ class Utils:
         minSleep = int(f.readline())        
         f.readline()
         maxSleep = int(f.readline())
-        return dragMouseDelay
+        f.readline()
+        firefoxFolder = f.readline()
+        return [dragMouseDelay,firefoxFolder]
         
     def mySleep(startTime):
         global minSleep

@@ -1,7 +1,7 @@
 import numpy as np
 import random
 import chess
-from karelthehuman import KarelTheHuman
+from karelthetrainer.karelthehumanV2 import KarelTheHumanV2 as KarelTheHuman
 
 class ChessController:
     board = chess.Board()

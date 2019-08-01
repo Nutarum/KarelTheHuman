@@ -12,7 +12,7 @@ class BrowserController:
     driver = None     
     cellSize = 0
     mouse = None 
-    def initWeb():
+    def initWeb(firefoxProfileFolder):
         global driver
         global action
         
@@ -20,9 +20,16 @@ class BrowserController:
         # Abrimos el navegador con normalidad, vamos a lichess.org y nos logeamos
         # Ahora iremos a C:/Users/<USUARIO>/AppData/Roaming/Mozilla/Firefox/Profiles
         # Una de las carpetas contendra la informacion de la sesion de firefox (cookies y demas)
-        # En la ruta de la linea inferior, ponemos la ruta completa con el nombre de la carpeta
-        fp = webdriver.FirefoxProfile('C:/Users/NutPc/AppData/Roaming/Mozilla/Firefox/Profiles/cxs6dg4g.default-release')        
-        driver = webdriver.Firefox(fp)
+        # En el fichero config.txt, en la linea que sigue a "folder of mozilla firefox profile"
+        # Pondremos el nombre de la carpeta
+        
+        try:
+            fp = webdriver.FirefoxProfile('C:/Users/NutPc/AppData/Roaming/Mozilla/Firefox/Profiles/' + firefoxProfileFolder)        
+            driver = webdriver.Firefox(fp)
+        except Exception as e:
+            print("ARCHIVO DE SESION DE FIREFOX NO ENCONTRADO, EL BOT NO ESTARÁ LOGEADO")
+            print(e)
+            driver = webdriver.Firefox()
         
         #PARA QUE EL NAVEGADOR NO SE MUESTRE
         #options = Options()

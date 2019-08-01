@@ -11,9 +11,12 @@ from utils import Utils
    
 print("Starting...")
 
-dragMouseDelay = Utils.loadConfig()
+conf = Utils.loadConfig()
+dragMouseDelay = conf[0]
+firefoxProfileFolder = conf[1]
 
-BrowserController.initWeb()
+
+BrowserController.initWeb(firefoxProfileFolder)
 BrowserController.initMouse()
 
 
