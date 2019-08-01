@@ -4,11 +4,11 @@ from colorama import Fore, Back, Style, init
 init()
 
 class Human:
-    def elegirMovimiento(board): 
+    def elegirMovimiento(self,board): 
         mov=[]
         if board.move_stack:
             mov = [board.peek(),0]
-        Human.printBoard(board,mov)
+        self.printBoard(board,mov)
         
         salir = False
         while(not salir):
@@ -27,7 +27,7 @@ class Human:
         
     #dibuja el tablero, remarcando el movimiento elegido por el bot
     #ademas de escribir el valor que le da al bot al tablero tras el movimiento
-    def printBoard(board,mov):
+    def printBoard(self,board,mov):
         print()
         pieces = board.piece_map() #diccionario [casilla, pieza]
         print ("  -----------------")
@@ -45,7 +45,7 @@ class Human:
                         print(Back.YELLOW,end='') 
                 #si hay una pieza en esta casilla
                 if(casilla in pieces.keys()): 
-                    Human.printPiece(pieces[casilla])
+                    self.printPiece(pieces[casilla])
                 else:
                     print(". ",end='')
                 print(Back.BLACK,end='') 
@@ -53,7 +53,7 @@ class Human:
         print ("  -----------------")
         print ("   a b c d e f g h")        
            
-    def printPiece(piece):
+    def printPiece(self,piece):
         char = 'x'
         if(piece.piece_type==1):
             char = 'p'

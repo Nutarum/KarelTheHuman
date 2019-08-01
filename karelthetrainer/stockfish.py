@@ -3,7 +3,7 @@ import chess.engine
 
 class Stockfish: 
     engine = None    
-    def __init__(self,skillLevel):
+    def __init__(self,skillLevel=20):
         self.engine = chess.engine.SimpleEngine.popen_uci("stockfish_10_x64.exe")  
         #print(engine.options) #para mostrar todas las opciones de config
         #print(engine.options["Skill Level"]) #para mostrar los valores de una opcion de config

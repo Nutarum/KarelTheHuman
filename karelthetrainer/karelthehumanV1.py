@@ -20,7 +20,8 @@ ATTACKED_VALUE_MULTI = 0.1
 RANDOM_RANGE = 0
 
 class KarelTheHumanV1:
-    def elegirMovimiento(board):        
+    
+    def elegirMovimiento(self,board):        
         moveList = list(board.legal_moves)     
         
         if(len(moveList)==0):
@@ -29,7 +30,7 @@ class KarelTheHumanV1:
         bestMove = 0
         for i in range(0,len(moveList)):
             board.push(moveList[i])            
-            value = KarelTheHumanV1.getBoardValue(board)
+            value = self.getBoardValue(board)
             if(value>bestValue):
                 bestValue=value
                 bestMove=i            
@@ -41,7 +42,7 @@ class KarelTheHumanV1:
         
         return ret
         
-    def getBoardValue(board):
+    def getBoardValue(self,board):
         #tenemos que poner el turno negado, porque en este punto ya hemos pusheado nuestro movimiento para probarlo
         orientation = not board.turn 
     
@@ -57,20 +58,20 @@ class KarelTheHumanV1:
                 value = value + CELL_CONTROLED_VALUE
         for p in pieces: #en p tenemos la casilla
             piece = pieces[p]
-            pieceValue =  KarelTheHumanV1.getPieceValue(piece,p)
+            pieceValue =  self.getPieceValue(piece,p)
             if(piece.color == orientation): #si la pieza es de nuestro color
                 value = value + pieceValue
                 
                 atacantes = board.attackers(not piece.color, p)
                 minAtacante = 99
                 for a in atacantes:
-                    aValue = KarelTheHumanV1.getPieceValue(board.piece_at(a),a)
+                    aValue = self.getPieceValue(board.piece_at(a),a)
                     if(aValue < minAtacante):
                         minAtacante = aValue
                 defensores = board.attackers(piece.color, p)
                 minDefensor = 99
                 for d in defensores:
-                    dValue = KarelTheHumanV1.getPieceValue(board.piece_at(d),d)
+                    dValue = self.getPieceValue(board.piece_at(d),d)
                     if(dValue < minAtacante):
                         minDefensor = dValue    
                 if(minDefensor==99):
@@ -86,13 +87,13 @@ class KarelTheHumanV1:
                 atacantes = board.attackers(not piece.color, p)
                 minAtacante = 99
                 for a in atacantes:
-                    aValue = KarelTheHumanV1.getPieceValue(board.piece_at(a),a)
+                    aValue = self.getPieceValue(board.piece_at(a),a)
                     if(aValue < minAtacante):
                         minAtacante = aValue
                 defensores = board.attackers(piece.color, p)
                 minDefensor = 99
                 for d in defensores:
-                    dValue = KarelTheHumanV1.getPieceValue(board.piece_at(d),d)
+                    dValue = self.getPieceValue(board.piece_at(d),d)
                     if(dValue < minAtacante):
                         minDefensor = dValue                       
                 if(minDefensor==99):
@@ -125,7 +126,7 @@ class KarelTheHumanV1:
         return value + (random.random() * RANDOM_RANGE)
         
 
-    def getPieceValue(piece,pos):
+    def getPieceValue(self,piece,pos):
         piece_type = piece.piece_type
         if(piece_type==1):
             #vamos a hacer que los peones valgan mas conforme mas hayan avanzado

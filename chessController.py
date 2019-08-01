@@ -3,15 +3,18 @@ import random
 import chess
 from karelthetrainer.karelthehumanV2 import KarelTheHumanV2 as KarelTheHuman
 
-class ChessController:
-    board = chess.Board()
-    
+board = chess.Board()
+bot = KarelTheHuman()
+print("Versión del bot cargada: " + str(bot))
+
+class ChessController: 
     def clearBoard():        
         global board        
         board = chess.Board()
         
     def updateBoardState(data):
         global board      
+        global bot
         ChessController.clearBoard()   
         print(data)
         if(len(data)<3):
@@ -27,7 +30,7 @@ class ChessController:
         
         moveData=[0]
         if(orientation==turn):
-            movimiento = KarelTheHuman.elegirMovimiento(board)
+            movimiento = bot.elegirMovimiento(board)
             if(movimiento[0]==-1):            
                 print ("NO ESTAMOS EN PARTIDA")
                 return [-1]

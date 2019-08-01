@@ -68,7 +68,7 @@ class BrowserController:
         
         playing = driver.find_elements_by_xpath('/html/body/div[1]/main/aside/div/section/div[1]/div/div')
         for p in playing:
-            if(not "Playing" in p.text):
+            if(not "Playing" in p.text and not "Jugando" in p.text):
                 return [-1]
         
         orientation = driver.find_elements_by_xpath('/html/body/div[1]/main/div[1]/div[1]/div/cg-helper/cg-container/coords[1]')

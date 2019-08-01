@@ -27,9 +27,9 @@ class Train:
             numPartidas = 1
         
         #bot1 = Stockfish(1) #recibe como parametro el nivel de stockfish (de 1 a 20)
-        bot1 = KarelTheHumanV1
-        #bot1 = Human
-        bot2 = KarelTheHumanV2
+        #bot1 = KarelTheHumanV1()
+        bot1 = Human()
+        bot2 = KarelTheHumanV2()
         
         victoriasBot1 = 0
         victoriasBot2 = 0
