@@ -21,11 +21,11 @@ Tener mozilla firefox instalado
 y ejecutar:
 python main.py
 
-navegar manualmente en lichess hasta la partida que quieras jugar
-y marcar la casilla inferior izq y inferior derecha poniendo el raton encima
-y pulsando una tecla (con el foco en la consola)
+Hay que dejar el navegador en la esquina superior izquierda de la pantalla (el se colocara ahi automaticamente)
 
-El bot ademas aceptara cualquier desafio de partida (si realizamos los pasos para que comienze logeado en lichess), siempre que no este ya jugando (hay que marcar previamente el lugar de las casillas inferior izq y inferior derecha)
+Para jugar hay 2 opciones: 
+ - Navegar manualmente en lichess hasta la partida que quieras jugar
+ - El bot ademas aceptara cualquier desafio de partida (si realizamos los pasos para que comienze logeado en lichess), siempre que no este ya jugando
 
 ### PARA QUE EL BOT COMIENZE LOGEADO EN LICHESS
 Mirar instrucciones al inicio de la clase browserController.py
@@ -44,8 +44,6 @@ debido a esta linea en browserController "if(not "Playing" in p.text and not "Ju
 
 ## >>> ToDo <<<
 - cuando la pantalla de lichess es muy pequeña peta, hacer que avise sin crashear
-- hacer que detecte automaticamente la posición del tablero
-
 ## >>> BUGS <<<
 - 
 

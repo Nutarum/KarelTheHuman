@@ -7,7 +7,11 @@ from pynput.mouse import Button, Controller
 import time
 import random
 import os
-    
+
+boardStartX = -1
+boardStartY = -1
+mouse = Controller()
+
 class BrowserController:
 
     driver = None     
@@ -46,20 +50,30 @@ class BrowserController:
         # get web page
         driver.get(urlpage) 
         
-    def initMouse():
-        global mouse
-        global boardStartX
-        global boardStartY
-        global rematchX
-        global rematchY
+        # Resize the window to the screen width/height
+        driver.set_window_size(800, 600)
+        # Move the window to position x/y
+        driver.set_window_position(0, 0)
+        
+    def loadBoardPosition():
         global squareSize
-        mouse = Controller() 
-        input("Move the mouse to the bottom left square and press any key...")
-        boardStartX = mouse.position[0]
-        boardStartY = mouse.position[1]
-        input("Move the mouse to the bottom right square and press any key...")
-        squareSize = (mouse.position[0]-boardStartX)/7
-		    
+        global boardStartX
+        global boardStartY  
+        global driver
+        
+        barraSuperior = driver.execute_script('return window.outerHeight - window.innerHeight;')
+        
+        files = driver.find_elements_by_xpath('/html/body/div[1]/main/div[1]/div[1]/div/cg-helper/cg-container/coords[2]')
+        ranks = driver.find_elements_by_xpath('/html/body/div[1]/main/div[1]/div[1]/div/cg-helper/cg-container/coords[1]')
+        for f in files:
+            boardStartX = f.location['x']
+            boardStartY = f.location['y'] + barraSuperior
+        for r in ranks:            
+            squareSize = (r.location['x']+r.size['width']-boardStartX)/8
+            
+        boardStartX = boardStartX + squareSize/2
+        boardStartY = boardStartY - squareSize/2
+        
     def aceptarDesafios():
         btn = driver.find_elements_by_xpath('/html/body/header/div[2]/div[2]/div/div/div/div[2]/form/button')
         for b in btn:
@@ -104,7 +118,15 @@ class BrowserController:
         global mouse
         global boardStartX
         global boardStartY
-        global squareSize   
+        global squareSize 
+        if(boardStartX==-1):
+            BrowserController.loadBoardPosition()
+        print(boardStartX)
+        print(boardStartY)
+        print(squareSize)
+        
+        
+                
         currentX = int(boardStartX + (moveData[0]*squareSize) + (random.randint(0, int(squareSize/4))-squareSize/8))
         currentY = int(boardStartY - (moveData[1]*squareSize) + (random.randint(0, int(squareSize/4))-squareSize/8))
         mouse.position = (currentX, currentY)

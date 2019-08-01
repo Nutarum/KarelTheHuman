@@ -4,5 +4,5 @@ min Sleep time between moves (miliseconds)
 600
 max Sleep time between moves (miliseconds)
 1000
-folder of mozilla firefox profile (for lichess login) example: cxs6dg4g.default-release
-iqczx549.default-1541590852403
+folder of mozilla firefox profile (for lichess login) example: iqczx549.default-1541590852403
+cxs6dg4g.default-release

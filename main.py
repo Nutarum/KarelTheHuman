@@ -15,11 +15,7 @@ conf = Utils.loadConfig()
 dragMouseDelay = conf[0]
 firefoxProfileFolder = conf[1]
 
-
 BrowserController.initWeb(firefoxProfileFolder)
-BrowserController.initMouse()
-
-
 
 startTime = time.time() #current time in seconds (miliseconds in the decimal values)
 startTime = Utils.mySleep(startTime)
