@@ -6,6 +6,7 @@ from selenium import webdriver
 from pynput.mouse import Button, Controller
 import time
 import random
+import os
     
 class BrowserController:
 
@@ -22,9 +23,13 @@ class BrowserController:
         # Una de las carpetas contendra la informacion de la sesion de firefox (cookies y demas)
         # En el fichero config.txt, en la linea que sigue a "folder of mozilla firefox profile"
         # Pondremos el nombre de la carpeta
+        # * SI NO SALTA EL ERROR DE QUE NO NOS LOGEAREMOS AL INCIAR LA APP, 
+        #   PERO AUN ASI NO NOS LOGEAMOS, EN FIREFOX->OPCIONES->PRIVACIDAD Y SEGURIDAD
+        #   HISTORIAL (al lado de "limpiar el historial cuando firefox se cierre") pulsamos el boton configuracion...
+        #   y desmarcamos todas las casillas
         
         try:
-            fp = webdriver.FirefoxProfile('C:/Users/NutPc/AppData/Roaming/Mozilla/Firefox/Profiles/' + firefoxProfileFolder)        
+            fp = webdriver.FirefoxProfile(os.getenv('APPDATA') + '/Mozilla/Firefox/Profiles/' + firefoxProfileFolder)        
             driver = webdriver.Firefox(fp)
         except Exception as e:
             print("ARCHIVO DE SESION DE FIREFOX NO ENCONTRADO, EL BOT NO ESTARÁ LOGEADO")
