@@ -19,7 +19,9 @@ class Utils:
         f.readline()
         firefoxFolder = f.readline()
         return [dragMouseDelay,firefoxFolder]
-        
+    
+    #sleeps a random amount of time each turn
+    #the turn processing time is subtracted from the sleep time
     def mySleep(startTime):
         global minSleep
         global maxSleep

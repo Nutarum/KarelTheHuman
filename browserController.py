@@ -10,12 +10,13 @@ import os
 
 boardStartX = -1
 boardStartY = -1
+squareSize = 0
 mouse = Controller()
 
 class BrowserController:
 
     driver = None     
-    cellSize = 0
+    
     mouse = None 
     def initWeb(firefoxProfileFolder):
         global driver
@@ -40,27 +41,23 @@ class BrowserController:
             print(e)
             driver = webdriver.Firefox()
         
-        #PARA QUE EL NAVEGADOR NO SE MUESTRE
-        #options = Options()
-        #options.headless = True
-        #driver = webdriver.Firefox(firefox_options=options)
-        
-        #driver = webdriver.Firefox()
         urlpage = 'https://lichess.org'
-        # get web page
+        # opens the browser
         driver.get(urlpage) 
         
         # Resize the window to the screen width/height
         driver.set_window_size(800, 600)
         # Move the window to position x/y
         driver.set_window_position(0, 0)
-        
+    
+    #loads the absolute position of the bottom left corner of the board in the screen, and the size of the board squares
     def loadBoardPosition():
         global squareSize
         global boardStartX
         global boardStartY  
         global driver
         
+        #we get the browser upper menu height, so we know where the browser content starts exactly
         barraSuperior = driver.execute_script('return window.outerHeight - window.innerHeight;')
         
         files = driver.find_elements_by_xpath('/html/body/div[1]/main/div[1]/div[1]/div/cg-helper/cg-container/coords[2]')
@@ -73,38 +70,38 @@ class BrowserController:
             
         boardStartX = boardStartX + squareSize/2
         boardStartY = boardStartY - squareSize/2
-        
+    
+    #if we have any pending challenge, the bot will accept it
     def aceptarDesafios():
         btn = driver.find_elements_by_xpath('/html/body/header/div[2]/div[2]/div/div/div/div[2]/form/button')
         for b in btn:
             b.click()
-            
+    
+    #reads the browser content, to return the current game state
+    #returns [bool,bool,list(String)] [board orientation, whos next to move, (d4,Nc6.....)]
     def readState():    
         global driver
-        global cellSize
         # find elements by xpath        
         data = []
         
+        #detects if we are currently in a game
         playing = driver.find_elements_by_xpath('/html/body/div[1]/main/aside/div/section/div[1]/div/div')
         for p in playing:
             if(not "Playing" in p.text and not "Jugando" in p.text):
-                return [-1]
+                return [-1] #if not in a game
         
+        #we get the board orientation (relevant to know what color we are playing, and to calculate the board coordinates
         orientation = driver.find_elements_by_xpath('/html/body/div[1]/main/div[1]/div[1]/div/cg-helper/cg-container/coords[1]')
         for o in orientation:
-            #si las blancas estan abajo, el valor es "ranks" si las negras estan abajo "ranks black"
-            data.append(o.get_attribute("className")=='ranks') 
+            #if white pieces are below, classname=="ranks", otherwise it will be "ranks black"
+            data.append(o.get_attribute("className")=='ranks')    
         
-        #vamos a leer el tamaño de las casillas
-        #boardStart = driver.find_elements_by_xpath('/html/body/div[1]/main/div[1]/div[1]/div/cg-helper')
-        #boardStart = boardStart[0]            
-        #cellSize = int(boardStart.get_attribute("clientHeight"))
-        
-        #vamos a coger la tabla de movimientos
+        #the table with all the game moves
         moves = driver.find_elements_by_xpath('/html/body/div/main/div[1]/div/div[2]/m2')
         
-        #segun el num de movimientos sabremos si es el turno de blancas o negras        
+        #if move count is even, its white to move, otherwise, its blacks turn       
         data.append(len(moves)%2==0)
+        #now we just append all the moves
         movesArray = []
         for m in moves:                
             try:
@@ -113,7 +110,9 @@ class BrowserController:
                 print(e)
         data.append(movesArray)
         return data
-        
+    
+    #recieves the board coordinates (d2d4 will be 4244) and perform the move with the mouse
+    #(coordinates are relative to the bottom left corner (bottom left DOESNT NEED TO BE A1, can also be H8))    
     def movePiece(moveData,dragMouseDelay):       
         global mouse
         global boardStartX
@@ -121,11 +120,6 @@ class BrowserController:
         global squareSize 
         if(boardStartX==-1):
             BrowserController.loadBoardPosition()
-        print(boardStartX)
-        print(boardStartY)
-        print(squareSize)
-        
-        
                 
         currentX = int(boardStartX + (moveData[0]*squareSize) + (random.randint(0, int(squareSize/4))-squareSize/8))
         currentY = int(boardStartY - (moveData[1]*squareSize) + (random.randint(0, int(squareSize/4))-squareSize/8))
@@ -135,6 +129,7 @@ class BrowserController:
         targetX = int(boardStartX + (moveData[2]*squareSize) + (random.randint(0, int(squareSize/4))-squareSize/8))
         targetY = int(boardStartY - (moveData[3]*squareSize) + (random.randint(0, int(squareSize/4))-squareSize/8))
         i=0
+        #we drag the mouse, trying to simulate "human" behavior (maybe not that human LUL)
         while(currentX!=targetX or currentY!=targetY):
             i=i+1
             if(i%dragMouseDelay==0):
